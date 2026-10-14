@@ -1,0 +1,133 @@
+spring:
+  application:
+    name: aamotors-crm
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/aamotors}
+    username: ${DB_USERNAME:aamotors}
+    password: ${DB_PASSWORD:aamotors}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc.time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:aamotors}
+    password: ${RABBITMQ_PASSWORD:aamotors}
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: auto
+        default-requeue-rejected: false
+        prefetch: 5
+  jackson:
+    time-zone: UTC
+    default-property-inclusion: non_null
+
+server:
+  port: ${SERVER_PORT:8080}
+  forward-headers-strategy: framework
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        same-site: lax
+        secure: ${SESSION_COOKIE_SECURE:false}
+      timeout: ${SESSION_TIMEOUT:12h}
+  error:
+    include-stacktrace: never
+    include-message: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+app:
+  demo:
+    seed: ${SEED_DEMO_DATA:false}      # insert demo customers/vehicles on an empty database (local only)
+  admin:
+    username: ${ADMIN_USERNAME:}
+    initial-password: ${ADMIN_INITIAL_PASSWORD:}
+  security:
+    login:
+      max-failures: ${LOGIN_MAX_FAILURES:5}
+      lock-duration: ${LOGIN_LOCK_DURATION:15m}
+  media:
+    root: ${MEDIA_ROOT:./uploads}
+    logo-max-bytes: 2097152
+  messaging:
+    outbox:
+      poll-interval: ${OUTBOX_POLL_INTERVAL:2s}
+      batch-size: 50
+    sms:
+      max-attempts: ${SMS_MAX_ATTEMPTS:5}
+      base-backoff: ${SMS_BASE_BACKOFF:10s}
+      max-backoff: ${SMS_MAX_BACKOFF:10m}
+      rate-per-second: ${SMS_RATE_PER_SECOND:5}
+      mock-delivery-delay: ${SMS_MOCK_DELIVERY_DELAY:3s}
+  campaigns:
+    tick: ${CAMPAIGN_TICK:30s}
+    batch-size: ${CAMPAIGN_BATCH_SIZE:50}
+    cost-whatsapp-amd: ${COST_WHATSAPP_AMD:0}
+    cost-viber-business-amd: ${COST_VIBER_BUSINESS_AMD:0}
+    cost-telegram-amd: ${COST_TELEGRAM_AMD:0}
+    cost-viber-bot-amd: ${COST_VIBER_BOT_AMD:0}
+  integrations:
+    public-base-url: ${APP_PUBLIC_BASE_URL:}   # e.g. https://crm.aamotors.am — needed for webhooks and media links
+    sms:
+      provider: ${SMS_PROVIDER:MOCK}          # MOCK | AWS
+      enabled: ${SMS_ENABLED:false}
+    whatsapp:
+      enabled: ${WHATSAPP_ENABLED:false}
+      access-token: ${WHATSAPP_ACCESS_TOKEN:}
+      phone-number-id: ${WHATSAPP_PHONE_NUMBER_ID:}
+      business-account-id: ${WHATSAPP_BUSINESS_ACCOUNT_ID:}
+      graph-api-version: ${WHATSAPP_GRAPH_API_VERSION:v21.0}
+      webhook-verify-token: ${WHATSAPP_WEBHOOK_VERIFY_TOKEN:}
+      app-secret: ${WHATSAPP_APP_SECRET:}
+      marketing-template: ${WHATSAPP_MARKETING_TEMPLATE:}        # approved template with one body parameter {{1}}
+      marketing-media-template: ${WHATSAPP_MARKETING_MEDIA_TEMPLATE:}  # approved template with image header + body {{1}}
+      template-language: ${WHATSAPP_TEMPLATE_LANGUAGE:hy}
+    viber-business:
+      enabled: ${VIBER_BUSINESS_ENABLED:false}
+      partner-api-key: ${VIBER_BUSINESS_PARTNER_API_KEY:}
+    viber-bot:
+      enabled: ${VIBER_BOT_ENABLED:false}
+      auth-token: ${VIBER_BOT_AUTH_TOKEN:}
+      bot-name: ${VIBER_BOT_NAME:A&A Motors}
+      bot-uri: ${VIBER_BOT_URI:}                # the bot's URI (for viber://pa?chatURI=... deep links)
+    telegram:
+      enabled: ${TELEGRAM_ENABLED:false}
+      bot-token: ${TELEGRAM_BOT_TOKEN:}
+      webhook-secret: ${TELEGRAM_WEBHOOK_SECRET:}
+      bot-username: ${TELEGRAM_BOT_USERNAME:}
+    aws:
+      region: ${AWS_REGION:eu-central-1}
+      sms-origination-identity: ${AWS_SMS_ORIGINATION_IDENTITY:}
+      sms-configuration-set: ${AWS_SMS_CONFIGURATION_SET:}
+
+logging:
+  level:
+    com.aamotors: INFO

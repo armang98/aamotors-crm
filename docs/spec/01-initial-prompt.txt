@@ -1,0 +1,811 @@
+# A&A Motors CRM — Complete Production-Ready Implementation Prompt
+
+You are a Principal Software Architect, Senior Java Backend Engineer, Senior React/TypeScript Engineer, DevOps Engineer, and QA Engineer.
+
+Build a production-ready full-stack web application named **A&A Motors CRM** for an automotive repair business.
+
+The application must be simple, practical, modern, and focused on five main pages:
+
+1. Quick Advertising
+2. Vehicle Cards and Service History
+3. Referral Bonuses
+4. Vehicle Ready SMS
+5. Advertising Campaigns
+
+Do not add unnecessary enterprise modules.
+
+Implement a real working application with backend APIs, PostgreSQL persistence, a responsive frontend, asynchronous messaging, automated tests, and deployment documentation.
+
+## 1. Technology Stack
+
+### Backend
+- Java 21
+- Spring Boot 3.x (latest compatible stable version)
+- Spring Security
+- Spring Data JPA / Hibernate
+- PostgreSQL
+- Flyway
+- RabbitMQ
+- Maven
+- JUnit 5
+- Mockito
+- AssertJ
+- Testcontainers
+- Spring Validation
+- OpenAPI / Swagger
+
+### Frontend
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
+- TanStack Query
+- React Hook Form
+- Zod
+- Recharts
+- React Router
+
+### Infrastructure
+- Docker
+- Docker Compose
+- PostgreSQL
+- RabbitMQ
+- Secure environment variables
+- GitHub Actions CI/CD
+
+Use a modular monolith architecture.
+
+The default interface language must be Russian. Prepare localization support for Armenian and English.
+
+Use a modern automotive-inspired design with responsive layouts, clean typography, tables, forms, cards, and dashboards.
+
+---
+
+# PAGE 1 — QUICK ADVERTISING
+
+The homepage must contain a simple advertising form.
+
+### Fields
+- Upload advertising image
+- Advertising message textarea
+- Customer phone number
+- Search and select customers from the database
+- Checkbox: "Include latest vehicle service history"
+- Send button
+
+Support sending to one or multiple selected customers.
+
+### Message Delivery Priority
+
+Implement the following delivery order:
+
+1. WhatsApp Business
+2. Viber Business Messages
+3. Telegram Bot
+
+Use official APIs only.
+
+### WhatsApp
+- Official Meta WhatsApp Business Cloud API
+- Approved marketing templates when required
+- Customer marketing consent
+- Webhook processing
+- Delivery status tracking
+
+### Viber
+- Official Viber Business Messages through an approved messaging partner
+- Phone-number-based business messaging where supported
+- Delivery status tracking
+- Provider-specific message validation
+
+Do not use the Viber Bot API as a substitute for Business Messages.
+
+### Telegram
+- Official Telegram Bot API
+- Customer must previously start the bot
+- Store and verify the Telegram chat ID
+- Never attempt to send arbitrary Telegram messages using only a phone number
+
+### Fallback Logic
+
+- Try WhatsApp first if the recipient is eligible.
+- If WhatsApp is conclusively unavailable or fails, try Viber.
+- If Viber is unavailable or fails, try Telegram.
+- Skip channels without valid consent, recipient identity, or provider configuration.
+- Stop after confirmed delivery.
+- Never send the same message to all three channels simultaneously.
+- Do not fall back automatically while a previous channel has an uncertain delivery status.
+- Support delivery reconciliation and manual review.
+- Prevent duplicate messages.
+
+### Include Latest Service History
+
+If the checkbox is enabled:
+
+- Retrieve the latest service record for the selected vehicle.
+- If a customer has multiple vehicles, require vehicle selection.
+- Include service date, mileage, oil information, filter information, and service description.
+- If no history exists, send the original message.
+- Display the complete message preview before sending.
+- Respect provider template and message length restrictions.
+- Do not expose vehicle history to unverified recipients.
+
+---
+
+# PAGE 2 — VEHICLE CARDS AND SERVICE HISTORY
+
+Implement full vehicle management.
+
+Each customer may have multiple vehicles.
+
+## Vehicle Fields
+
+- Vehicle brand and model — text input
+- VIN code — text input
+- License plate — text input
+- Customer phone number — phone input
+- Current vehicle mileage (km) — numeric input
+- Next oil change mileage (km) — numeric input
+
+## Oil Information
+
+- Oil name — text input
+- Oil replacement type — enum select
+
+Enum values:
+
+- ENGINE — Мотор
+- TRANSMISSION — Коробка передач
+- STEERING — Рулевая
+- DIFFERENTIAL — Редуктор
+- AXLE — Мост
+- TRANSFER_CASE — Раздатка
+
+## Oil Filter Information
+
+- Oil filter name — text input
+- Oil filter part number/code — text input
+
+Russian labels:
+- Название масляного фильтра
+- Код масляного фильтра
+
+## Cabin Filter Information
+
+- Cabin filter name — text input
+- Cabin filter part number/code — text input
+
+Russian labels:
+- Название салонного фильтра
+- Код салонного фильтра
+
+## Air Filter Information
+
+- Air filter name — text input
+- Air filter part number/code — text input
+
+Russian labels:
+- Название воздушного фильтра
+- Код воздушного фильтра
+
+## General Service Description
+
+- Large textarea: "Что сделали с автомобилем"
+
+This field must support multiline descriptions.
+
+Example:
+
+"Заменили моторное масло, масляный фильтр, салонный фильтр и воздушный фильтр. Проверили тормозную систему и уровень охлаждающей жидкости."
+
+## Form Layout
+
+Organize the vehicle form into visually separated sections:
+
+1. Vehicle Information
+2. Mileage Information
+3. Oil Information
+4. Filter Information
+5. General Service Description
+
+Display the filter inputs in three groups:
+
+**Oil Filter**
+- Name
+- Code
+
+**Cabin Filter**
+- Name
+- Code
+
+**Air Filter**
+- Name
+- Code
+
+Filter names and codes must be optional because not every service includes replacement of all filters.
+
+## Service History
+
+Every service visit must create a new service record.
+
+Do not overwrite historical service information.
+
+Store:
+
+- Service record UUID
+- Vehicle ID
+- Service date
+- Current mileage at service
+- Next oil change mileage
+- Oil name
+- Oil replacement type
+- Oil filter name
+- Oil filter code
+- Cabin filter name
+- Cabin filter code
+- Air filter name
+- Air filter code
+- General service description
+- Created at
+- Updated at
+
+Show service history in reverse chronological order.
+
+Allow viewing, editing, and deleting service records with appropriate permissions and audit logging.
+
+### Search
+
+Support searching vehicles by:
+
+- Phone number
+- License plate
+- VIN
+- Brand
+- Model
+
+Normalize phone numbers to E.164.
+
+Validate mileage values.
+
+Do not allow negative mileage.
+
+Warn if the next oil change mileage is less than or equal to the current mileage, while allowing authorized correction of historical records.
+
+### Maintenance Reminders
+
+Support maintenance reminders based on:
+
+- Next oil change mileage
+- Recommended next service date
+
+Do not assume the vehicle has reached a mileage threshold without updated mileage data.
+
+---
+
+# PAGE 3 — REFERRAL BONUSES
+
+Implement a simple referral program.
+
+## Fixed Bonus Rule
+
+**The referral reward is always a 10% discount.**
+
+Do not implement configurable bonus amounts.
+
+Do not use fixed AMD rewards.
+
+Do not allow employees to modify the percentage.
+
+The 10% value must be defined as a business rule constant and enforced by the backend.
+
+## Referral Workflow
+
+1. An existing customer recommends the auto service to a friend.
+2. An employee opens the Referral Bonuses page.
+3. The employee selects the existing customer.
+4. The employee selects or creates the invited customer.
+5. The system creates a referral record.
+6. The invited customer completes their first qualifying paid service.
+7. The referring customer receives one 10% discount entitlement.
+8. The referring customer can redeem that entitlement on one eligible future service.
+9. After redemption, that entitlement cannot be reused.
+
+Each invited customer can qualify for a referral reward only once.
+
+A referring customer may earn separate one-time 10% discount entitlements for different eligible invited customers, but the same invited customer cannot generate another reward.
+
+Do not stack multiple referral discounts on a single service order.
+
+## Referral Fields
+
+- Referral UUID
+- Referring customer ID
+- Invited customer ID
+- Referral creation date
+- Referral status
+- Fixed discount percentage: 10%
+- Qualifying service order ID
+- Reward issued date
+- Reward redemption date
+- Reward status
+- Redeemed service order ID
+
+## Referral Statuses
+
+- PENDING
+- CONFIRMED
+- REWARDED
+- CANCELLED
+
+## Reward Statuses
+
+- NOT_ISSUED
+- AVAILABLE
+- REDEEMED
+- VOIDED
+
+## Referral Page UI
+
+Provide:
+
+- Referring customer search
+- Invited customer search
+- Add referral button
+- Referral history table
+- Referral status
+- Reward status
+- Fixed 10% discount indicator
+- Number of successful referrals
+- Number of available discounts
+- Number of redeemed discounts
+
+## Referral Analytics
+
+Add a monthly chart showing:
+
+- Total referrals
+- Confirmed referrals
+- Rewards issued
+- Rewards redeemed
+
+Provide monthly and yearly filters.
+
+## Fraud and Duplicate Prevention
+
+- Prevent self-referrals.
+- Prevent duplicate referrals for the same invited customer.
+- Prevent multiple rewards from the same invited customer.
+- Prevent reward redemption more than once.
+- Validate qualifying paid service records.
+- Use database constraints and transactions.
+- Record an audit trail for reward issuance and redemption.
+
+---
+
+# PAGE 4 — VEHICLE READY SMS
+
+Create a dedicated page for notifying customers when their vehicles are ready for pickup.
+
+## Features
+
+- Search vehicle by phone number
+- Search by license plate
+- Search by VIN
+- Select vehicle
+- Preview SMS
+- Mark vehicle as ready
+- Automatically queue SMS
+- View delivery history
+- Manually resend SMS with confirmation
+
+## Service Order Statuses
+
+- RECEIVED
+- IN_PROGRESS
+- WAITING_FOR_PARTS
+- READY_FOR_PICKUP
+- DELIVERED
+- CANCELLED
+
+When the order transitions to READY_FOR_PICKUP:
+
+1. Persist the status change.
+2. Create a notification event in the same database transaction.
+3. Publish the event through a transactional outbox.
+4. Queue SMS delivery.
+5. Render the SMS template.
+6. Send through the configured official SMS provider.
+7. Record delivery attempts and results.
+8. Prevent duplicate automatic notifications.
+
+## SMS Template
+
+Russian:
+
+"Ваш автомобиль {{vehicleBrand}} {{vehicleModel}} ({{licensePlate}}) готов к выдаче. Можете забрать его по адресу: {{businessAddress}}. Тел.: {{businessPhone}}."
+
+Support Armenian, Russian, and English.
+
+Use the customer's preferred language when available.
+
+## SMS Integration
+
+Create:
+
+- SmsProvider interface
+- MockSmsProvider
+- RealSmsProvider adapter based on verified official provider documentation
+
+Support:
+
+- Secure API credentials
+- Provider response processing
+- Delivery status callbacks
+- Retry handling
+- Rate limiting
+- Delivery history
+- Error reporting
+- Manual resend
+
+Never invent undocumented SMS provider endpoints.
+
+Use the mock provider in local development.
+
+---
+
+# PAGE 5 — ADVERTISING CAMPAIGNS
+
+Create a page for managing scheduled and bulk advertising campaigns.
+
+## Campaign Fields
+
+- Campaign UUID
+- Campaign name
+- Campaign description
+- Advertising image
+- Message text
+- Selected customer segment
+- Scheduled date
+- Scheduled time
+- Time zone
+- Status
+- Created at
+- Updated at
+
+## Features
+
+- Create campaign
+- Edit campaign
+- Delete draft campaign
+- Duplicate campaign
+- Select recipients
+- Upload advertising image
+- Compose message
+- Preview campaign
+- Schedule campaign
+- Start campaign
+- Pause campaign
+- Cancel campaign
+- View results
+
+## Customer Filters
+
+- Vehicle brand
+- Vehicle model
+- Last service date
+- Oil replacement type
+- Oil name
+- Oil filter name
+- Oil filter code
+- Cabin filter name
+- Cabin filter code
+- Air filter name
+- Air filter code
+- Next oil change mileage
+- Customer marketing consent
+
+Use the same sequential WhatsApp -> Viber -> Telegram messaging strategy as Page 1.
+
+## Campaign Statuses
+
+- DRAFT
+- SCHEDULED
+- RUNNING
+- PAUSED
+- COMPLETED
+- CANCELLED
+- FAILED
+
+## Analytics
+
+Display:
+
+- Total selected customers
+- Eligible recipients
+- Attempted messages
+- Accepted messages
+- Confirmed deliveries
+- Failed messages
+- Pending messages
+- Delivery channel
+- Estimated campaign cost
+- Actual messaging cost when available
+
+Do not treat API acceptance as confirmed delivery.
+
+---
+
+# SHARED BUSINESS SETTINGS
+
+Provide a settings dialog accessible from the application header.
+
+Do not create a sixth main navigation page.
+
+Fields:
+
+- Business name
+- Business logo
+- Business address
+- Business phone number
+- Business working hours
+- Default language
+- Time zone
+- WhatsApp integration settings
+- Viber integration settings
+- Telegram integration settings
+- SMS provider settings
+
+Default currency: AMD.
+
+Store timestamps in UTC and display them in the business time zone.
+
+---
+
+# DATABASE DESIGN
+
+Use PostgreSQL with Flyway migrations.
+
+Create appropriate normalized tables:
+
+- users
+- roles
+- customers
+- vehicles
+- vehicle_service_records
+- service_orders
+- referrals
+- referral_rewards
+- campaigns
+- campaign_recipients
+- message_deliveries
+- message_attempts
+- sms_notifications
+- customer_consents
+- telegram_chat_links
+- business_settings
+- outbox_events
+- audit_logs
+
+Use UUID primary keys.
+
+Add appropriate foreign keys, indexes, unique constraints, and transaction boundaries.
+
+Store the six filter fields in each relevant service history record.
+
+The referral reward percentage must always be 10%.
+
+Use database constraints where appropriate to prevent duplicate referral rewards.
+
+---
+
+# MESSAGING RELIABILITY
+
+Use RabbitMQ for asynchronous messaging.
+
+Implement:
+
+- Durable queues
+- Persistent delivery jobs
+- Transactional outbox
+- Idempotent message processing
+- Exponential backoff
+- Dead-letter queues
+- Provider-specific rate limits
+- Delivery status reconciliation
+- Safe sequential fallback
+- Duplicate prevention
+- Campaign cancellation
+
+Do not claim exactly-once delivery across external providers.
+
+Do not automatically send to another channel when a previous provider's delivery status remains ambiguous.
+
+---
+
+# SECURITY AND COMPLIANCE
+
+Implement:
+
+- Secure authentication
+- Backend role-based authorization
+- Password hashing
+- Input validation
+- Rate limiting
+- Webhook signature verification
+- Secret management
+- Safe media upload
+- Audit logging
+- Sensitive information masking
+
+Store channel-specific marketing consent.
+
+Check consent immediately before marketing delivery.
+
+Support opt-out and suppression lists.
+
+Use official messaging integrations only.
+
+Never use unofficial WhatsApp automation, Telegram user scraping, or platform restriction bypasses.
+
+---
+
+# FRONTEND REQUIREMENTS
+
+Build a responsive, modern dashboard.
+
+Exactly five main navigation pages.
+
+Use:
+
+- Sidebar navigation
+- Clean forms
+- Searchable tables
+- Confirmation dialogs
+- Toast notifications
+- Loading states
+- Error states
+- Empty states
+- Image previews
+- Service history timeline
+- Referral charts
+- Delivery status indicators
+
+Use Russian as the default interface language.
+
+Prepare translation files for Armenian and English.
+
+All forms must connect to real backend APIs.
+
+Do not build static mock-only frontend screens.
+
+---
+
+# TESTING
+
+Implement automated tests for:
+
+1. Customer creation
+2. Vehicle creation
+3. VIN and phone validation
+4. Service record creation
+5. Saving all oil and filter fields
+6. Service history retrieval
+7. Latest service record selection
+8. Creating a referral
+9. Enforcing exactly 10% discount
+10. Preventing duplicate referral rewards
+11. Preventing repeated redemption
+12. Creating a service order
+13. Marking a vehicle ready
+14. Sending a single automatic SMS
+15. Manual SMS resend
+16. Campaign creation
+17. Marketing consent validation
+18. WhatsApp delivery simulation
+19. Viber fallback simulation
+20. Telegram fallback eligibility
+21. Duplicate message prevention
+22. Scheduled campaign execution
+
+Use Testcontainers for integration tests.
+
+Use mock messaging providers by default.
+
+---
+
+# DEPLOYMENT AND DOCUMENTATION
+
+Provide:
+
+- Docker Compose
+- .env.example
+- README.md
+- Database migrations
+- Seed data
+- Mock messaging providers
+- API documentation
+- Architecture documentation
+- Deployment guide
+- Testing guide
+- Known limitations
+
+The application must run locally without real messaging credentials.
+
+Real sending must remain disabled until official credentials and required approvals are configured.
+
+---
+
+# IMPLEMENTATION ORDER
+
+Phase 1:
+- Project structure
+- Backend setup
+- Frontend setup
+- Database
+- Authentication
+
+Phase 2:
+- Vehicle cards
+- Oil and filter fields
+- Service history
+- Customer management
+
+Phase 3:
+- Referral management
+- Fixed 10% discount
+- Reward redemption
+- Referral analytics
+
+Phase 4:
+- Service orders
+- Vehicle ready SMS
+- SMS history
+
+Phase 5:
+- Quick advertising
+- Official messaging provider abstractions
+- Mock provider delivery
+- Sequential fallback
+
+Phase 6:
+- Advertising campaigns
+- Scheduling
+- Analytics
+
+Phase 7:
+- Security hardening
+- Automated tests
+- CI/CD
+- Deployment documentation
+
+---
+
+# FINAL INSTRUCTIONS
+
+Start by inspecting the repository.
+
+Create the architecture and implementation plan.
+
+Then implement the application phase by phase.
+
+Do not stop after generating documentation.
+
+Do not skip backend implementation.
+
+Do not replace real persistence with frontend mock data.
+
+Do not invent official messaging API contracts.
+
+At the end of each phase:
+
+- Summarize completed functionality.
+- List files created or modified.
+- Run relevant tests.
+- Report actual test results.
+- Explain remaining limitations.
+- Continue to the next phase.
+
+The final application must provide five fully functional pages, persistent vehicle and service history, all six filter fields, a fixed one-time 10% referral discount system, vehicle-ready SMS notifications, and compliant omnichannel advertising.
+
+Begin implementation now.

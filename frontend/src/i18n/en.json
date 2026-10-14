@@ -1,0 +1,1081 @@
+{
+  "app": {
+    "name": "A&A Motors CRM",
+    "brand": "A&A Motors",
+    "tagline": "Automotive service management",
+    "loading": "Loading…",
+    "retry": "Retry",
+    "save": "Save",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "close": "Close",
+    "remove": "Remove",
+    "confirm": "Confirm",
+    "openMenu": "Open menu",
+    "comingInPhase": "Coming in Phase {{phase}}",
+    "notFound": "Page not found"
+  },
+  "nav": {
+    "quickAdvertising": "Quick Advertising",
+    "vehicles": "Vehicle Cards",
+    "referrals": "Referral Bonuses",
+    "vehicleReady": "Vehicle Ready SMS",
+    "campaigns": "Advertising Campaigns",
+    "settings": "Settings",
+    "main": "Main navigation"
+  },
+  "header": {
+    "language": "Language",
+    "theme": "Toggle theme",
+    "themeLight": "Light mode",
+    "themeDark": "Dark mode",
+    "settings": "Business settings",
+    "account": "Account",
+    "changePassword": "Change password",
+    "logout": "Sign out",
+    "signedInAs": "Signed in as"
+  },
+  "languages": {
+    "hy": "Հայերեն",
+    "en": "English"
+  },
+  "login": {
+    "title": "Sign in",
+    "subtitle": "Administrator access to A&A Motors CRM",
+    "username": "Username",
+    "usernamePlaceholder": "admin",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "footer": "A&A Motors · Gyumri, Armenia"
+  },
+  "password": {
+    "title": "Change password",
+    "description": "Use at least 10 characters. You will stay signed in.",
+    "current": "Current password",
+    "new": "New password",
+    "confirm": "Confirm new password",
+    "submit": "Update password",
+    "success": "Password updated",
+    "required": "Please replace the initial password before continuing."
+  },
+  "settings": {
+    "title": "Business settings",
+    "description": "Company details used in notifications, templates and the interface.",
+    "tabs": {
+      "business": "Business",
+      "integrations": "Integrations"
+    },
+    "businessName": "Business name",
+    "address": "Address",
+    "primaryPhone": "Primary phone",
+    "secondaryPhone": "Secondary phone",
+    "secondaryPhoneHint": "Optional",
+    "workingHours": "Working hours",
+    "workingHoursPlaceholder": "Mon–Sat 09:00–19:00",
+    "defaultLanguage": "Default language",
+    "timeZone": "Time zone",
+    "currency": "Currency",
+    "currencyHint": "Fixed to Armenian dram",
+    "logo": "Logo",
+    "logoHint": "PNG, JPEG, WebP or SVG up to 2 MB",
+    "logoUpload": "Upload logo",
+    "logoReplace": "Replace logo",
+    "logoRemove": "Remove logo",
+    "logoUploaded": "Logo updated",
+    "logoRemoved": "Logo removed",
+    "saved": "Settings saved",
+    "integrationsNote": "Provider credentials are configured through environment variables on the server, never in the browser. See docs/messaging-integrations.md.",
+    "integrationsReadOnly": "Read-only",
+    "integration": {
+      "sms": "SMS (AWS End User Messaging)",
+      "whatsapp": "WhatsApp Business Cloud API",
+      "viberBusiness": "Viber Business Messages",
+      "viberBot": "Viber Bot API",
+      "telegram": "Telegram Bot API"
+    },
+    "provider": "Provider",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "configured": "Configured",
+    "notConfigured": "Not configured",
+    "mock": "Mock mode"
+  },
+  "pages": {
+    "quickAdvertising": {
+      "title": "Quick Advertising",
+      "description": "Compose an advertising message with an image, pick one or more customers and send it through the official messaging channels in priority order: WhatsApp, Viber Business Messages, Telegram, Viber Bot. Optionally attach the customer's latest service history.",
+      "empty": "The advertising composer will appear here."
+    },
+    "vehicles": {
+      "title": "Vehicle Cards and Service History",
+      "description": "Register vehicles by brand, VIN and plate, record every service visit with oil, oil-filter, cabin-filter and air-filter details, and browse the full history of each car.",
+      "empty": "No vehicles yet. Vehicle cards will be managed here."
+    },
+    "referrals": {
+      "title": "Referral Bonuses",
+      "description": "Track who invited whom. When an invited customer completes their first paid service, the referrer earns a one-time 10% discount that can be redeemed once.",
+      "empty": "Referral tracking and analytics will appear here."
+    },
+    "vehicleReady": {
+      "title": "Vehicle Ready SMS",
+      "description": "Mark a vehicle as ready for pickup and automatically notify the customer by SMS in Armenian or English, with full delivery history and manual resend.",
+      "empty": "Service orders and SMS history will appear here."
+    },
+    "campaigns": {
+      "title": "Advertising Campaigns",
+      "description": "Plan scheduled bulk campaigns, segment customers by vehicle and service data, and follow attempted, accepted and confirmed deliveries per channel.",
+      "empty": "Campaign management will appear here."
+    }
+  },
+  "validation": {
+    "required": "This field is required",
+    "minLength": "Must be at least {{count}} characters",
+    "maxLength": "Must be at most {{count}} characters",
+    "phone": "Enter a valid phone number in international format, e.g. +37494889881",
+    "timeZone": "Unknown time zone identifier",
+    "passwordMismatch": "Passwords do not match",
+    "fileType": "Unsupported file type",
+    "fileSize": "File is larger than {{size}}",
+    "vin": "VIN must be 17 characters (A–Z, 0–9) without I, O or Q",
+    "number": "Enter a number",
+    "integer": "Enter a whole number",
+    "mileage": "Mileage cannot be negative",
+    "date": "Enter a valid date",
+    "dateFuture": "Date cannot be in the future"
+  },
+  "errors": {
+    "network": "Cannot reach the server. Check your connection.",
+    "internal": "Something went wrong. Please try again.",
+    "notFound": "Not found",
+    "validation.failed": "Please correct the highlighted fields",
+    "auth.badCredentials": "Incorrect username or password",
+    "auth.rateLimited": "Too many attempts. Try again in {{retryAfterSeconds}} seconds.",
+    "auth.unauthenticated": "Your session has expired. Please sign in again.",
+    "auth.forbidden": "You do not have permission to do that",
+    "auth.passwordMismatch": "Current password is incorrect",
+    "upload.invalidType": "Unsupported image type. Use PNG, JPEG, WebP or SVG.",
+    "upload.tooLarge": "The file is too large (max 2 MB)",
+    "customer.phoneExists": "A customer with this phone number already exists",
+    "customer.hasVehicles": "This customer still has vehicles and cannot be deleted",
+    "vehicle.vinExists": "A vehicle with this VIN already exists",
+    "vin.invalid": "Invalid VIN",
+    "phone.invalid": "Invalid phone number",
+    "mileage.negative": "Mileage cannot be negative",
+    "licensePlate.required": "License plate is required",
+    "vehicle.nextOilChangeNotAhead": "Next oil change mileage is not greater than the current mileage",
+    "referral.selfReferral": "A customer cannot refer themselves",
+    "referral.invitedAlreadyReferred": "This customer has already been referred",
+    "referral.invalidTransition": "This action is not allowed in the referral's current state",
+    "referral.rewardAlreadyIssued": "The discount has already been issued",
+    "referral.rewardNotAvailable": "There is no available discount on this referral",
+    "referral.rewardAlreadyRedeemed": "This discount has already been used",
+    "referral.orderAlreadyDiscounted": "That service order already has a referral discount",
+    "referral.orderNotPaid": "The service order is not paid",
+    "referral.orderNotInvitedCustomer": "The service order does not belong to the invited customer",
+    "serviceOrder.invalidTransition": "This status change is not allowed for the order's current state",
+    "serviceOrder.notReady": "The vehicle is not marked ready for pickup",
+    "sms.confirmRequired": "Please confirm the resend",
+    "sms.disabledForCustomer": "This customer has opted out of SMS; no message can be sent",
+    "amount.negative": "The amount cannot be negative",
+    "advertising.confirmRequired": "Please preview the message and confirm before sending",
+    "advertising.noEligibleRecipients": "None of the selected recipients can be reached on any channel",
+    "advertising.vehicleSelectionRequired": "Select a vehicle for customers who own several vehicles",
+    "advertising.notUncertain": "Only uncertain deliveries can be resolved manually",
+    "upload.tooLargeImage": "The image is too large (max 5 MB)",
+    "telegram.codeExpired": "The link code has expired",
+    "campaign.notEditable": "This campaign can no longer be edited",
+    "campaign.notDraft": "Only drafts can be deleted",
+    "campaign.invalidTransition": "This action is not allowed in the campaign's current status",
+    "campaign.scheduleInPast": "The scheduled time is in the past",
+    "campaign.noRecipients": "No eligible recipients match the segment"
+  },
+  "toast": {
+    "languageSaved": "Language preference saved",
+    "loggedOut": "Signed out"
+  },
+  "units": {
+    "km": "km",
+    "days": "days"
+  },
+  "table": {
+    "search": "Search",
+    "clearSearch": "Clear search",
+    "pagination": "Pagination",
+    "pageOf": "Page {{page}} of {{total}}",
+    "total": "{{count}} total",
+    "previous": "Previous page",
+    "next": "Next page",
+    "actions": "Actions"
+  },
+  "common": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "create": "Create",
+    "optional": "Optional",
+    "yes": "Yes",
+    "no": "No",
+    "back": "Back",
+    "today": "Today",
+    "none": "—"
+  },
+  "vehicles": {
+    "tabs": {
+      "vehicles": "Vehicles",
+      "customers": "Customers",
+      "reminders": "Reminders"
+    },
+    "searchPlaceholder": "Search vehicles…",
+    "searchHint": "Matches phone number, license plate, VIN, brand or model.",
+    "new": "New vehicle",
+    "edit": "Edit vehicle",
+    "delete": "Delete vehicle",
+    "deleteConfirm": "Delete {{vehicle}} ({{plate}}) and all of its service history? This cannot be undone.",
+    "created": "Vehicle created",
+    "updated": "Vehicle updated",
+    "deleted": "Vehicle deleted",
+    "empty": "No vehicles found",
+    "emptyHint": "Register the first vehicle to start tracking its service history.",
+    "notFound": "Vehicle not found",
+    "columns": {
+      "vehicle": "Vehicle",
+      "plate": "Plate",
+      "vin": "VIN",
+      "customer": "Customer",
+      "mileage": "Mileage",
+      "nextOilChange": "Next oil change",
+      "lastService": "Last service",
+      "records": "Visits"
+    },
+    "sections": {
+      "vehicle": "Vehicle Information",
+      "mileage": "Mileage Information",
+      "oil": "Oil Information",
+      "filters": "Filter Information",
+      "description": "General Service Description"
+    },
+    "fields": {
+      "brand": "Brand",
+      "model": "Model",
+      "vin": "VIN code",
+      "vinHint": "17 characters, no I, O or Q",
+      "licensePlate": "License plate",
+      "customerPhone": "Customer phone number",
+      "customerPhoneHint": "Existing customers are matched by phone",
+      "customerName": "Customer full name",
+      "customerLanguage": "Customer language",
+      "currentMileage": "Current mileage (km)",
+      "nextOilChangeMileage": "Next oil change mileage (km)",
+      "nextServiceDate": "Recommended next service date",
+      "serviceDate": "Service date",
+      "recordServiceNow": "Record a service visit now",
+      "recordServiceNowHint": "Saves the oil, filter and work details below as the first service record."
+    },
+    "existingCustomer": "Existing customer",
+    "newCustomer": "New customer",
+    "lookingUp": "Checking phone…",
+    "warnings": {
+      "nextOilChangeNotAhead": "Next oil change mileage is not greater than the current mileage."
+    },
+    "maintenance": {
+      "OK": "OK",
+      "DUE_SOON": "Due soon",
+      "OVERDUE": "Overdue",
+      "UNKNOWN": "No data",
+      "kmRemaining": "{{km}} km left",
+      "kmOverdue": "{{km}} km overdue",
+      "daysRemaining": "{{days}} days left",
+      "daysOverdue": "{{days}} days overdue"
+    },
+    "detail": {
+      "info": "Vehicle",
+      "customer": "Customer",
+      "editCustomer": "Edit customer",
+      "language": "Language",
+      "consents": "Marketing consent",
+      "optedOut": "Opted out of marketing",
+      "noConsents": "No channel consent recorded",
+      "visits": "{{count}} service visits",
+      "backToList": "Back to vehicles",
+      "orders": "Service orders",
+      "noOrders": "No service orders for this vehicle yet.",
+      "newOrder": "New order"
+    }
+  },
+  "oil": {
+    "name": "Oil name",
+    "type": "Oil replacement type",
+    "typePlaceholder": "Select type",
+    "types": {
+      "ENGINE": "Engine",
+      "TRANSMISSION": "Transmission",
+      "STEERING": "Steering",
+      "DIFFERENTIAL": "Differential",
+      "AXLE": "Axle",
+      "TRANSFER_CASE": "Transfer Case"
+    }
+  },
+  "filters": {
+    "hint": "Optional — fill in only the filters that were replaced.",
+    "oil": {
+      "title": "Oil Filter",
+      "name": "Oil filter name",
+      "code": "Oil filter code"
+    },
+    "cabin": {
+      "title": "Cabin Filter",
+      "name": "Cabin filter name",
+      "code": "Cabin filter code"
+    },
+    "air": {
+      "title": "Air Filter",
+      "name": "Air filter name",
+      "code": "Air filter code"
+    }
+  },
+  "service": {
+    "title": "Service history",
+    "add": "Add service visit",
+    "edit": "Edit service record",
+    "delete": "Delete service record",
+    "deleteConfirm": "Delete the service record from {{date}}? This cannot be undone.",
+    "created": "Service visit recorded",
+    "updated": "Service record updated",
+    "deleted": "Service record deleted",
+    "empty": "No service history yet",
+    "emptyHint": "Add the first service visit to start the timeline.",
+    "latest": "Latest",
+    "descriptionLabel": "What was done to the vehicle?",
+    "descriptionPlaceholder": "Replaced engine oil, oil filter, cabin filter and air filter. Checked brakes and coolant level.",
+    "mileageAt": "Mileage",
+    "nextOilChange": "Next oil change",
+    "nextService": "Next service",
+    "oil": "Oil",
+    "noOil": "No oil change",
+    "code": "code"
+  },
+  "customers": {
+    "searchPlaceholder": "Search customers by name or phone…",
+    "new": "New customer",
+    "edit": "Edit customer",
+    "delete": "Delete customer",
+    "deleteConfirm": "Delete {{name}}? Customers with vehicles cannot be deleted.",
+    "created": "Customer created",
+    "updated": "Customer updated",
+    "deleted": "Customer deleted",
+    "consentsSaved": "Consents saved",
+    "empty": "No customers found",
+    "emptyHint": "Customers are created here or together with a vehicle.",
+    "columns": {
+      "name": "Name",
+      "phone": "Phone",
+      "language": "Language",
+      "vehicles": "Vehicles",
+      "marketing": "Marketing",
+      "consents": "Consents"
+    },
+    "fields": {
+      "fullName": "Full name",
+      "phone": "Phone number",
+      "preferredLanguage": "Preferred language",
+      "notes": "Notes",
+      "marketingOptOut": "Opted out of all marketing",
+      "marketingOptOutHint": "When on, no advertising is sent regardless of channel consent."
+    },
+    "optedOut": "Opted out",
+    "consents": {
+      "title": "Channel consent",
+      "hint": "Record the customer's explicit consent per channel. Consent is checked right before every marketing send.",
+      "SMS": "SMS",
+      "WHATSAPP": "WhatsApp",
+      "VIBER_BUSINESS": "Viber Business",
+      "VIBER_BOT": "Viber Bot",
+      "TELEGRAM": "Telegram"
+    }
+  },
+  "reminders": {
+    "title": "Maintenance reminders",
+    "hint": "Vehicles approaching or past their next oil change mileage or recommended service date. Mileage is only compared against the last recorded reading.",
+    "kmWindow": "Mileage window (km)",
+    "daysWindow": "Days window",
+    "empty": "No vehicles due",
+    "emptyHint": "Nothing is within the selected windows.",
+    "columns": {
+      "vehicle": "Vehicle",
+      "customer": "Customer",
+      "phone": "Phone",
+      "km": "Mileage",
+      "days": "Date",
+      "status": "Status"
+    },
+    "createCampaign": "Create reminder campaign",
+    "createCampaignHint": "Opens a new campaign targeting vehicles within the mileage window"
+  },
+  "referrals": {
+    "searchPlaceholder": "Search by customer name or phone…",
+    "empty": "No referrals found",
+    "emptyHint": "Record who invited whom using the form above.",
+    "invalidOrderId": "Enter a valid service order id (UUID)",
+    "table": {
+      "title": "Referral history"
+    },
+    "summary": {
+      "successful": "Successful referrals",
+      "available": "Available discounts",
+      "redeemed": "Redeemed discounts",
+      "fixed": "Fixed discount",
+      "fixedNote": "Fixed business rule. The percentage cannot be changed.",
+      "total": "{{count}} referrals in total"
+    },
+    "add": {
+      "title": "Add referral",
+      "description": "Record who recommended the service to whom. When the invited customer completes their first paid service, the referrer earns a one-time {{percent}}% discount.",
+      "referrer": "Referring customer",
+      "invited": "Invited customer",
+      "notes": "Notes",
+      "submit": "Add referral",
+      "created": "Referral recorded",
+      "fixedHint": "Reward: one-time {{percent}}% discount, not editable"
+    },
+    "picker": {
+      "placeholder": "Select a customer…",
+      "search": "Search by name or phone…",
+      "empty": "No customers match",
+      "create": "Create new customer",
+      "clear": "Clear selection"
+    },
+    "status": {
+      "PENDING": "Pending",
+      "CONFIRMED": "Confirmed",
+      "REWARDED": "Rewarded",
+      "CANCELLED": "Cancelled"
+    },
+    "reward": {
+      "NOT_ISSUED": "Not issued",
+      "AVAILABLE": "Available",
+      "REDEEMED": "Redeemed",
+      "VOIDED": "Voided"
+    },
+    "columns": {
+      "referrer": "Referrer",
+      "invited": "Invited",
+      "created": "Created",
+      "status": "Referral status",
+      "reward": "Reward",
+      "discount": "Discount"
+    },
+    "filters": {
+      "status": "Referral status",
+      "rewardStatus": "Reward status",
+      "allStatuses": "All statuses",
+      "allRewards": "All rewards"
+    },
+    "actions": {
+      "view": "View details",
+      "confirm": "Confirm first paid service",
+      "redeem": "Redeem discount",
+      "cancel": "Cancel referral"
+    },
+    "confirm": {
+      "title": "Confirm first paid service",
+      "description": "{{invited}} completed their first paid service. {{referrer}} will receive a one-time {{percent}}% discount.",
+      "qualifiedAt": "Date of the qualifying service",
+      "serviceOrder": "Service order (optional, from Phase 4)",
+      "serviceOrderHint": "Leave empty until service orders are available.",
+      "submit": "Confirm and issue discount",
+      "success": "Referral confirmed — {{percent}}% discount issued"
+    },
+    "redeem": {
+      "title": "Redeem discount",
+      "description": "Apply {{referrer}}'s one-time {{percent}}% discount to a service. It cannot be used again afterwards.",
+      "serviceOrder": "Service order (optional, from Phase 4)",
+      "notes": "Notes",
+      "submit": "Redeem discount",
+      "success": "Discount redeemed"
+    },
+    "cancel": {
+      "title": "Cancel referral",
+      "description": "Cancel the referral of {{invited}} by {{referrer}}?",
+      "voidsReward": "The unused discount will be voided.",
+      "reason": "Reason",
+      "submit": "Cancel referral",
+      "success": "Referral cancelled"
+    },
+    "detail": {
+      "title": "Referral details",
+      "description": "{{referrer}} invited {{invited}}",
+      "referral": "Referral",
+      "reward": "Reward",
+      "ids": "Identifiers",
+      "createdAt": "Created",
+      "updatedAt": "Last updated",
+      "qualifiedAt": "Qualified on",
+      "qualifyingOrder": "Qualifying service order",
+      "issuedAt": "Discount issued",
+      "redeemedAt": "Discount redeemed",
+      "redeemedOrder": "Redeemed on service order",
+      "voidReason": "Void reason",
+      "cancelReason": "Cancellation reason",
+      "referralId": "Referral id",
+      "referrerId": "Referrer customer id",
+      "invitedId": "Invited customer id"
+    },
+    "analytics": {
+      "title": "Referral analytics",
+      "description": "Referrals created, confirmed, discounts issued and redeemed per period.",
+      "year": "Year",
+      "month": "Month",
+      "allMonths": "Whole year",
+      "period": "Period",
+      "series": {
+        "total": "Total referrals",
+        "confirmed": "Confirmed",
+        "issued": "Discounts issued",
+        "redeemed": "Discounts redeemed"
+      },
+      "empty": "No referral activity in this period",
+      "showTable": "Show table",
+      "showChart": "Show chart"
+    },
+    "customerDiscounts": {
+      "label": "Referral discounts",
+      "available_one": "{{count}} available 10% discount",
+      "available_other": "{{count}} available 10% discounts",
+      "view": "View referrals"
+    }
+  },
+  "orders": {
+    "tabs": {
+      "orders": "Orders",
+      "history": "Delivery history"
+    },
+    "new": "New order",
+    "newDescription": "Open a service order for a vehicle. You can mark it ready for pickup later to notify the customer by SMS.",
+    "createSubmit": "Create order",
+    "created": "Order {{number}} created",
+    "saved": "Order updated",
+    "searchPlaceholder": "Search orders…",
+    "searchHint": "Search by phone, plate, VIN, order number or customer name.",
+    "filters": {
+      "status": "Status",
+      "allStatuses": "All statuses"
+    },
+    "empty": "No service orders",
+    "emptyHint": "Create an order when a vehicle is received for service.",
+    "columns": {
+      "number": "Order",
+      "vehicle": "Vehicle",
+      "customer": "Customer",
+      "status": "Status",
+      "sms": "Ready SMS",
+      "amount": "Amount",
+      "received": "Received"
+    },
+    "status": {
+      "RECEIVED": "Received",
+      "IN_PROGRESS": "In progress",
+      "WAITING_FOR_PARTS": "Waiting for parts",
+      "READY_FOR_PICKUP": "Ready for pickup",
+      "DELIVERED": "Delivered",
+      "CANCELLED": "Cancelled"
+    },
+    "fields": {
+      "vehicle": "Vehicle",
+      "description": "Work description",
+      "descriptionPlaceholder": "What needs to be done",
+      "totalAmount": "Total amount (AMD)",
+      "amountHint": "Whole drams, no decimals.",
+      "paid": "Payment",
+      "paidAt": "Paid on",
+      "receivedAt": "Received",
+      "readyAt": "Ready since",
+      "deliveredAt": "Delivered",
+      "cancelReason": "Cancellation reason"
+    },
+    "vehiclePicker": {
+      "placeholder": "Select a vehicle…",
+      "search": "Search by phone, plate, VIN, brand or model",
+      "empty": "No vehicles found",
+      "clear": "Clear selection"
+    },
+    "detail": {
+      "description": "{{vehicle}} · {{plate}}",
+      "vehicle": "Vehicle",
+      "customer": "Customer",
+      "details": "Details",
+      "actions": "Status",
+      "sms": "Vehicle-ready SMS",
+      "final": "This order is closed; no further status changes are possible."
+    },
+    "actions": {
+      "markReady": "Mark vehicle ready",
+      "startWork": "Start work",
+      "waitingForParts": "Waiting for parts",
+      "delivered": "Delivered to customer",
+      "cancel": "Cancel order"
+    },
+    "statusChanged": "Status changed to “{{status}}”",
+    "readyQueued": "Vehicle marked ready. The SMS has been queued.",
+    "readySkipped": "Vehicle marked ready. The SMS was skipped for this customer.",
+    "markPaid": "Mark as paid",
+    "markPaidDescription": "Record that the customer paid for this order. Paid orders can qualify for referral discounts.",
+    "paidSaved": "Payment recorded",
+    "cancel": {
+      "title": "Cancel order",
+      "description": "Cancel order {{number}}? This cannot be undone.",
+      "reason": "Reason (optional)",
+      "submit": "Cancel order",
+      "done": "Order cancelled"
+    }
+  },
+  "sms": {
+    "status": {
+      "QUEUED": "Queued",
+      "SENDING": "Sending",
+      "SENT": "Accepted by provider",
+      "DELIVERED": "Delivered",
+      "FAILED": "Failed",
+      "UNCERTAIN": "Uncertain",
+      "SKIPPED": "Skipped"
+    },
+    "statusHint": {
+      "QUEUED": "Waiting in the delivery queue",
+      "SENDING": "Being handed to the SMS provider",
+      "SENT": "The provider accepted the message; handset delivery is not confirmed yet",
+      "DELIVERED": "Delivery confirmed by the provider",
+      "FAILED": "The provider could not deliver the message",
+      "UNCERTAIN": "The provider did not answer; the outcome must be checked manually",
+      "SKIPPED": "Not sent (no phone or the customer opted out)"
+    },
+    "kind": {
+      "VEHICLE_READY_AUTO": "Automatic",
+      "VEHICLE_READY_MANUAL": "Manual resend"
+    },
+    "outcome": {
+      "ACCEPTED": "Accepted",
+      "FAILED": "Failed",
+      "RETRY": "Retry scheduled",
+      "UNCERTAIN": "Uncertain",
+      "PENDING": "In progress"
+    },
+    "skipReason": {
+      "NO_PHONE": "The customer has no phone number.",
+      "SMS_OPTED_OUT": "The customer has opted out of SMS.",
+      "OTHER": "Skipped."
+    },
+    "fields": {
+      "recipient": "Recipient",
+      "language": "Language",
+      "sentAt": "Accepted at",
+      "deliveredAt": "Delivered at",
+      "failedAt": "Failed at",
+      "providerMessageId": "Provider message id",
+      "body": "Message text"
+    },
+    "attempts": "{{count}} attempts",
+    "noneYet": "No SMS has been queued for this order yet.",
+    "uncertainTitle": "Needs manual review",
+    "uncertainDescription": "The provider did not confirm whether this message was accepted. Check with the provider before resending to avoid a duplicate.",
+    "uncertainCallout": "{{count}} messages need manual review (uncertain outcome).",
+    "resend": "Resend SMS",
+    "resendTitle": "Resend vehicle-ready SMS?",
+    "resendDescription": "A new message will be sent to {{phone}}. The customer may receive it twice.",
+    "resendConfirm": "Send again",
+    "resendQueued": "A new SMS has been queued.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyFailed": "Could not copy",
+    "preview": {
+      "title": "SMS preview",
+      "description": "This is the exact text the customer will receive when you mark the vehicle ready.",
+      "readOnlyDescription": "The text the customer receives when the vehicle is marked ready.",
+      "open": "Preview text",
+      "language": "Preview language",
+      "sentIn": "Sent in the customer's language: {{language}}",
+      "recipient": "Recipient",
+      "chars": "Characters",
+      "segments": "SMS segments",
+      "unicodeNote": "Armenian text is sent as Unicode SMS (70 characters per segment).",
+      "confirm": "Mark ready and send SMS"
+    },
+    "provider": {
+      "title": "SMS provider",
+      "mock": "Mock mode",
+      "mockNote": "Mock mode — messages are simulated and never reach a phone. Configure AWS End User Messaging to send real SMS.",
+      "region": "Region",
+      "origination": "Origination identity"
+    },
+    "filters": {
+      "status": "Status",
+      "allStatuses": "All statuses"
+    },
+    "historyEmpty": "No SMS messages yet",
+    "historyEmptyHint": "Messages appear here once a vehicle is marked ready for pickup.",
+    "columns": {
+      "date": "Queued",
+      "order": "Order",
+      "recipient": "Recipient",
+      "language": "Language",
+      "kind": "Kind",
+      "status": "Status",
+      "attempts": "Attempts",
+      "providerId": "Provider id",
+      "error": "Last error"
+    }
+  },
+  "advertising": {
+    "channels": {
+      "title": "Messaging channels",
+      "mock": "Mock",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "notConfigured": "Not configured",
+      "hint": {
+        "WHATSAPP": "Meta WhatsApp Business Cloud API — approved marketing templates.",
+        "VIBER_BUSINESS": "Viber Business Messages through an approved partner.",
+        "TELEGRAM": "Official Telegram Bot API — only customers who started the bot.",
+        "VIBER_BOT": "Official Viber Bot API — only subscribed bot users."
+      }
+    },
+    "image": {
+      "label": "Advertising image",
+      "drop": "Drop an image here or click to choose",
+      "hint": "PNG, JPEG or WebP, up to 5 MB",
+      "alt": "Advertising image preview",
+      "remove": "Remove image",
+      "invalidType": "Unsupported image type. Use PNG, JPEG or WebP.",
+      "tooLarge": "The image is too large (max 5 MB)"
+    },
+    "compose": {
+      "title": "Compose",
+      "description": "Write the message, attach an image, pick customers and preview before sending.",
+      "message": "Advertising message",
+      "messagePlaceholder": "E.g. Summer discount: 15% off all services until the end of the month.",
+      "includeHistory": "Include latest vehicle service history",
+      "includeHistoryHint": "Appends the latest visit (date, mileage, oil, filters, work done) in the customer's language.",
+      "preview": "Preview",
+      "send": "Send",
+      "newMessage": "New message"
+    },
+    "recipients": {
+      "phone": "Customer phone number",
+      "addByPhone": "Add by phone",
+      "notFound": "No customer with this phone.",
+      "createCustomer": "Create customer",
+      "search": "Search customers",
+      "searchPlaceholder": "Name or phone…",
+      "results": "Search results",
+      "selected": "Selected recipients ({{count}})",
+      "none": "No recipients selected yet.",
+      "remove": "Remove {{name}}",
+      "noConsent": "No consent"
+    },
+    "preview": {
+      "title": "Preview",
+      "description": "Final message and channel eligibility per recipient.",
+      "empty": "Nothing to preview yet",
+      "emptyHint": "Write a message, add recipients and press Preview.",
+      "eligible": "{{count}} eligible",
+      "skipped": "{{count}} skipped",
+      "stale": "Outdated",
+      "staleHint": "Inputs changed — preview again before sending.",
+      "willTry": "Will try: {{channel}}",
+      "selectVehicle": "This customer has several vehicles — choose which service history to include",
+      "selectVehiclePlaceholder": "Select a vehicle",
+      "chars": "{{count}} characters",
+      "channels": "Channels in order",
+      "eligibleOne": "Eligible",
+      "fallbackInfo": "Channels are tried one at a time in this order: WhatsApp → Viber Business → Telegram → Viber Bot. Only one channel is used per recipient; the next is tried only after a conclusive failure, never while a result is uncertain."
+    },
+    "reason": {
+      "NO_CONSENT": "No marketing consent",
+      "NOT_CONFIGURED": "Channel not configured",
+      "NO_IDENTITY": "No linked account",
+      "OPTED_OUT": "Opted out of marketing",
+      "TEMPLATE_REQUIRED": "Approved template required",
+      "NO_PHONE": "No phone number",
+      "BLOCKED": "Bot blocked by the customer",
+      "DISABLED": "Channel disabled",
+      "UNKNOWN": "Not eligible"
+    },
+    "skipReason": {
+      "NO_ELIGIBLE_CHANNEL": "No eligible channel",
+      "VEHICLE_SELECTION_REQUIRED": "Vehicle selection required",
+      "OPTED_OUT": "Opted out of marketing",
+      "CUSTOMER_DELETED": "Customer deleted"
+    },
+    "send": {
+      "confirmTitle": "Send advertising message?",
+      "confirmDescription": "The message will be sent to {{count}} eligible recipient(s), one channel each in priority order.",
+      "success": "Queued for {{count}} recipient(s)"
+    },
+    "result": {
+      "title": "Result",
+      "description": "Delivery progress per recipient. “Accepted by provider” is not a delivery confirmation.",
+      "noDeliveries": "No deliveries",
+      "channel": "Channel",
+      "tried": "Tried",
+      "attempts": "Attempts"
+    },
+    "counts": {
+      "total": "total",
+      "pending": "pending",
+      "accepted": "accepted",
+      "delivered": "delivered",
+      "failed": "failed",
+      "skipped": "skipped",
+      "uncertain": "uncertain"
+    },
+    "deliveryStatus": {
+      "PENDING": "Pending",
+      "ATTEMPTING": "Attempting",
+      "ACCEPTED": "Accepted by provider",
+      "DELIVERED": "Delivered",
+      "FAILED": "Failed",
+      "UNCERTAIN": "Uncertain",
+      "SKIPPED": "Skipped"
+    },
+    "statusHint": {
+      "PENDING": "Waiting in the queue",
+      "ATTEMPTING": "A channel is being tried",
+      "ACCEPTED": "The provider accepted the message; delivery not yet confirmed",
+      "DELIVERED": "Delivery confirmed by the provider",
+      "FAILED": "All eligible channels failed",
+      "UNCERTAIN": "The provider did not answer conclusively — needs manual review",
+      "SKIPPED": "No eligible channel"
+    },
+    "sendStatus": {
+      "QUEUED": "Queued",
+      "RUNNING": "Running",
+      "COMPLETED": "Completed",
+      "COMPLETED_WITH_FAILURES": "Completed with failures",
+      "CANCELLED": "Cancelled"
+    },
+    "outcome": {
+      "SKIPPED": "Skipped",
+      "ACCEPTED": "Accepted",
+      "FAILED": "Failed",
+      "UNCERTAIN": "Uncertain"
+    },
+    "recent": {
+      "title": "Recent sends",
+      "empty": "No messages sent yet",
+      "emptyHint": "Sent advertising messages and their delivery results will appear here.",
+      "detailTitle": "Advertising send",
+      "columns": {
+        "date": "Date",
+        "message": "Message",
+        "counts": "Deliveries",
+        "status": "Status"
+      }
+    },
+    "review": {
+      "title": "{{count}} delivery(ies) need manual review",
+      "description": "The provider did not answer conclusively. Check with the customer and record the outcome; nothing is resent automatically.",
+      "resolve": "Resolve",
+      "resolved": "Delivery resolved",
+      "resolvedNote": "Note",
+      "dialogTitle": "Resolve uncertain delivery",
+      "dialogDescription": "{{name}} via {{channel}}. Record what actually happened.",
+      "outcome": "Outcome",
+      "continueFallback": "Continue with the next channel",
+      "continueFallbackHint": "Re-queues the delivery starting from the next channel in order.",
+      "note": "Note"
+    },
+    "identity": {
+      "linked": "Linked",
+      "notLinked": "Not linked",
+      "blocked": "Blocked",
+      "pendingCode": "Code pending",
+      "generateCode": "Generate link code",
+      "unlink": "Unlink",
+      "unlinkConfirm": "Remove the Telegram link? The customer will need to start the bot again.",
+      "unlinked": "Telegram unlinked",
+      "chatId": "Chat id",
+      "verifiedAt": "verified",
+      "telegramHint": "The customer must open the bot via the link or QR and press Start.",
+      "subscribed": "Subscribed",
+      "notSubscribed": "Not subscribed",
+      "userId": "User id",
+      "viberHint": "Only customers who subscribed to the Viber bot can be reached; phone numbers are never used.",
+      "codeTitle": "Telegram link code",
+      "codeDescription": "Show the QR or send the link to the customer. The code is valid once.",
+      "qrAlt": "QR code with the Telegram deep link",
+      "expires": "Expires {{date}}",
+      "title": "Messaging channels"
+    }
+  },
+  "campaigns": {
+    "new": "New campaign",
+    "newTitle": "New campaign",
+    "editTitle": "Edit campaign: {{name}}",
+    "editorHint": "Define the message, choose the audience with vehicle and service filters, then save as draft, schedule, or start now.",
+    "status": {
+      "DRAFT": "Draft",
+      "SCHEDULED": "Scheduled",
+      "RUNNING": "Running",
+      "PAUSED": "Paused",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled",
+      "FAILED": "Failed"
+    },
+    "table": {
+      "statusFilter": "Filter by status",
+      "allStatuses": "All statuses",
+      "name": "Campaign",
+      "status": "Status",
+      "scheduled": "Scheduled",
+      "recipients": "Recipients (eligible / selected)",
+      "progress": "Progress",
+      "created": "Created",
+      "notScheduled": "Not scheduled",
+      "progressHint": "{{done}} of {{total}} eligible recipients accepted or delivered",
+      "empty": "No campaigns yet",
+      "emptyHint": "Create a campaign to reach a customer segment on a schedule."
+    },
+    "actions": {
+      "view": "View results",
+      "schedule": "Schedule",
+      "startNow": "Start now",
+      "pause": "Pause",
+      "resume": "Resume",
+      "cancel": "Cancel campaign",
+      "duplicate": "Duplicate"
+    },
+    "confirm": {
+      "startTitle": "Start this campaign now?",
+      "startDescription": "Messages will be queued for {{count}} eligible recipients and sent through the channel fallback order. This cannot be undone.",
+      "startFromEditor": "The campaign will be saved and started immediately for every eligible recipient in the segment.",
+      "deleteTitle": "Delete draft?",
+      "deleteDescription": "The draft \"{{name}}\" will be permanently deleted.",
+      "cancelTitle": "Cancel this campaign?",
+      "cancelDescription": "Recipients that have not been dispatched will be skipped. Messages already accepted by a provider cannot be recalled.",
+      "cancelReason": "Reason (optional)"
+    },
+    "toast": {
+      "saved": "Campaign saved",
+      "scheduled": "Campaign scheduled",
+      "started": "Campaign started",
+      "paused": "Campaign paused",
+      "resumed": "Campaign resumed",
+      "cancelled": "Campaign cancelled",
+      "deleted": "Draft deleted",
+      "duplicated": "Campaign duplicated"
+    },
+    "form": {
+      "basics": "Basics",
+      "name": "Campaign name",
+      "description": "Description",
+      "message": "Message",
+      "audience": "Audience",
+      "audienceHint": "All filters are combined. Vehicle and service filters match the vehicle's latest service record. Leave everything empty to target all customers.",
+      "schedule": "Schedule",
+      "scheduleHint": "Optional. Times are entered in the chosen time zone; the server stores the UTC instant.",
+      "saveDraft": "Save draft",
+      "saveAndSchedule": "Save & schedule"
+    },
+    "filters": {
+      "brand": "Vehicle brand",
+      "model": "Vehicle model",
+      "lastServiceFrom": "Last service from",
+      "lastServiceTo": "Last service to",
+      "any": "Any",
+      "kmRemainingMax": "Km remaining to next oil change ≤",
+      "kmRemainingHint": "Compares next oil change mileage with the last recorded reading.",
+      "consentChannels": "Marketing consent on at least one of",
+      "consentChannelsHint": "Leave empty to include customers consenting to any channel.",
+      "allCustomers": "All customers",
+      "short": {
+        "brand": "Brand",
+        "model": "Model",
+        "lastServiceFrom": "Service from",
+        "lastServiceTo": "Service to",
+        "oilType": "Oil type",
+        "oilName": "Oil",
+        "oilFilterName": "Oil filter",
+        "oilFilterCode": "Oil filter code",
+        "cabinFilterName": "Cabin filter",
+        "cabinFilterCode": "Cabin filter code",
+        "airFilterName": "Air filter",
+        "airFilterCode": "Air filter code",
+        "nextOilChangeMileageMax": "Km remaining",
+        "consentChannels": "Consent"
+      }
+    },
+    "schedule": {
+      "title": "Schedule campaign",
+      "description": "Recipients are resolved now and the campaign starts automatically at the scheduled time.",
+      "date": "Date",
+      "time": "Time",
+      "timeZone": "Time zone",
+      "utcHint": "Starts at {{local}} ({{utc}} UTC)",
+      "pickDateTime": "Pick a date and time to see the UTC instant."
+    },
+    "segment": {
+      "title": "Segment preview",
+      "description": "Resolved right now from the current filters. The final list is captured when the campaign is scheduled or started.",
+      "total": "Matching customers",
+      "eligible": "Reachable",
+      "sample": "Sample of matching customers",
+      "empty": "No customers match these filters.",
+      "more": "+ {{count}} more"
+    },
+    "reason": {
+      "NO_ELIGIBLE_CHANNEL": "No eligible channel",
+      "CONSENT_FILTER": "No consent on the selected channels",
+      "CUSTOMER_DELETED": "Customer deleted",
+      "CAMPAIGN_CANCELLED": "Campaign cancelled",
+      "UNKNOWN": "Not eligible"
+    },
+    "stats": {
+      "selected": "Selected",
+      "eligible": "Eligible",
+      "attempted": "Attempted",
+      "accepted": "Accepted by provider",
+      "delivered": "Delivered",
+      "failed": "Failed",
+      "pending": "Pending",
+      "skipped": "Skipped",
+      "uncertain": "Uncertain",
+      "estimatedCost": "Estimated cost",
+      "actualCost": "Actual cost",
+      "notAvailable": "Not available",
+      "actualCostHint": "Actual cost needs per-channel provider pricing (COST_*_AMD settings).",
+      "acceptedNotDelivered": "\"Accepted by provider\" means the channel took the message. It is not confirmed delivery — only \"Delivered\" is confirmed by the provider's delivery event.",
+      "byChannel": "Messages by channel",
+      "byChannelHint": "Accepted or delivered messages, by the channel that took them.",
+      "byChannelEmpty": "No messages have been accepted yet.",
+      "messages": "messages"
+    },
+    "detail": {
+      "back": "Back to campaigns",
+      "startedAt": "Started",
+      "completedAt": "Completed",
+      "cancelReason": "Cancel reason",
+      "noImage": "No image",
+      "recipientsSummary": "{{eligible}} reachable of {{selected}} selected customers",
+      "analytics": "Analytics",
+      "tabs": {
+        "recipients": "Recipients",
+        "deliveries": "Deliveries"
+      },
+      "noRecipients": "Recipients are captured when the campaign is scheduled or started."
+    },
+    "recipients": {
+      "customer": "Customer",
+      "phone": "Phone",
+      "vehicle": "Vehicle",
+      "eligibility": "Eligibility",
+      "eligible": "Eligible",
+      "firstChannel": "First channel",
+      "delivery": "Delivery",
+      "notDispatched": "Not dispatched yet"
+    },
+    "reminder": {
+      "defaultName": "Maintenance reminder {{date}}",
+      "defaultMessage": "Dear customer, according to our records your vehicle is due for its next oil change soon. Visit A&A Motors to book a service."
+    }
+  }
+}

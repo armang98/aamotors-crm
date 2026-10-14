@@ -1,0 +1,1108 @@
+# A&A Motors CRM — Final Production-Ready Implementation Specification
+
+You are a Principal Software Architect, Senior Java 21 Engineer, Senior React/TypeScript Engineer, DevOps Engineer, Security Engineer, and QA Automation Engineer.
+
+Your mission is to design, implement, test, document, and prepare for deployment a complete full-stack web application named **A&A Motors CRM**.
+
+This is a real automotive service business located in Gyumri, Armenia.
+
+Build a functional, maintainable application, not a static prototype.
+
+The repository currently contains specification text files but no application code. Treat this document as the authoritative consolidated specification and build the application from scratch.
+
+Do not stop after producing an implementation plan. Proceed with actual development, phase by phase.
+
+---
+
+# 1. Business Information
+
+Use the following confirmed business details:
+
+| Property | Value |
+|---|---|
+| Business Name | A&A Motors |
+| Application Name | A&A Motors CRM |
+| Browser Title | A&A Motors CRM |
+| Country | Armenia |
+| City | Gyumri |
+| Address | 52/2 Vazgen Sargsyan Street, Gyumri, Armenia |
+| Primary Phone | +37494889881 |
+| Secondary Phone | +37493099473 |
+| Default Language | Armenian (hy-AM) |
+| Secondary Language | English (en) |
+| Time Zone | Asia/Yerevan |
+| Currency | AMD |
+
+Seed these details into the database.
+
+The administrator must be able to edit them through a Business Settings dialog.
+
+Use the primary business phone number in SMS notifications by default.
+
+Do not confuse business contact phone numbers with messaging provider sender identities.
+
+---
+
+# 2. Application Scope
+
+This is a **single-tenant application for one automotive service business**.
+
+There is only one application user: the business owner.
+
+Authentication role:
+
+- ADMIN
+
+Do not implement employee management, organization management, multi-tenancy, or complex permission hierarchies.
+
+The application must have exactly five main navigation pages:
+
+1. Quick Advertising
+2. Vehicle Cards and Service History
+3. Referral Bonuses
+4. Vehicle Ready SMS
+5. Advertising Campaigns
+
+Business Settings must be accessible from the application header without creating a sixth main navigation page.
+
+---
+
+# 3. Technology Stack
+
+## Backend
+
+- Java 21
+- Spring Boot 3.x, latest compatible stable version
+- Spring Security
+- Spring Data JPA / Hibernate
+- PostgreSQL
+- Flyway
+- RabbitMQ
+- Spring Validation
+- Spring Scheduling
+- Spring Actuator
+- AWS SDK for Java v2
+- Maven
+- JUnit 5
+- Mockito
+- AssertJ
+- Testcontainers
+- OpenAPI / Swagger
+
+## Frontend
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
+- TanStack Query
+- React Hook Form
+- Zod
+- React Router
+- Recharts
+- i18next
+
+## Infrastructure
+
+- Docker
+- Docker Compose
+- PostgreSQL
+- RabbitMQ
+- Nginx or equivalent reverse proxy
+- GitHub Actions
+- Environment-based configuration
+- Secure secret management
+
+Use a modular monolith.
+
+Do not introduce microservices or Kubernetes.
+
+---
+
+# 4. User Interface and Design
+
+Build a premium, modern automotive CRM interface.
+
+Requirements:
+
+- Professional automotive branding
+- A&A Motors logo support
+- Clean navigation sidebar
+- Modern cards and tables
+- Responsive desktop and mobile layouts
+- Light and dark modes
+- Accessible forms
+- Clear validation errors
+- Loading indicators
+- Toast notifications
+- Confirmation dialogs
+- Search and filtering
+- Consistent design system
+
+Default interface language must be Armenian.
+
+English must be available through a language switcher.
+
+All labels, buttons, validation messages, navigation elements, and notifications must be localized.
+
+Use fonts with proper Armenian Unicode support.
+
+---
+
+# 5. PAGE 1 — QUICK ADVERTISING
+
+The homepage must provide a simple advertising message composer.
+
+## Required Fields
+
+- Advertising image upload
+- Advertising message textarea
+- Customer phone number input
+- Customer search and selection
+- Multiple recipient selection
+- Checkbox: Include latest vehicle service history
+- Send button
+
+## Message Composition
+
+The administrator must be able to:
+
+1. Upload an image.
+2. Write an advertising message manually.
+3. Select one or multiple customers.
+4. Optionally include vehicle service history.
+5. Preview the final message.
+6. Send the message.
+
+## Messaging Delivery Priority
+
+Implement this exact sequential fallback order:
+
+1. WhatsApp Business Cloud API
+2. Viber Business Messages
+3. Telegram Bot
+4. Viber Bot API
+
+Do not send through all channels simultaneously.
+
+### Fallback Rules
+
+- Check customer eligibility for each channel.
+- Check channel-specific marketing consent.
+- Check provider configuration.
+- Attempt the highest-priority eligible channel first.
+- Stop after confirmed delivery.
+- Continue to the next channel only after a conclusive failure or confirmed unavailability.
+- Do not automatically fall back while a previous delivery result is ambiguous.
+- Store every delivery attempt.
+- Prevent duplicate messages.
+- Support manual reconciliation of uncertain outcomes.
+
+## Include Latest Vehicle Service History
+
+When the checkbox is enabled:
+
+1. Find the customer's vehicle.
+2. If multiple vehicles exist, require explicit vehicle selection.
+3. Retrieve the latest service record.
+4. Append a formatted summary where the selected channel permits it.
+5. Include:
+   - Vehicle brand and model
+   - Service date
+   - Mileage
+   - Oil name
+   - Oil replacement type
+   - Oil filter name and code
+   - Cabin filter name and code
+   - Air filter name and code
+   - General service description
+6. Omit empty fields.
+7. If no service history exists, send the original advertising message.
+8. Display a final message preview before sending.
+
+For WhatsApp business-initiated marketing, use approved templates and their permitted parameters rather than arbitrary free-form content.
+
+Never disclose vehicle service history to an unverified recipient.
+
+---
+
+# 6. PAGE 2 — VEHICLE CARDS AND SERVICE HISTORY
+
+Implement vehicle creation, editing, searching, viewing, and deletion.
+
+A customer may own multiple vehicles.
+
+## Vehicle Information
+
+Required inputs:
+
+- Vehicle brand and model — text
+- VIN code — text
+- License plate — text
+- Customer phone number — phone
+- Current mileage (km) — number
+- Next oil change mileage (km) — number
+
+## Oil Information
+
+- Oil name — text
+- Oil replacement type — enum select
+
+Enum values:
+
+- ENGINE — Շարժիչ / Engine
+- TRANSMISSION — Փոխանցման տուփ / Transmission
+- STEERING — Ղեկային համակարգ / Steering
+- DIFFERENTIAL — Ռեդուկտոր / Differential
+- AXLE — Կամուրջ / Axle
+- TRANSFER_CASE — Բաշխիչ տուփ / Transfer Case
+
+## Oil Filter
+
+- Oil filter name — text
+- Oil filter code / part number — text
+
+## Cabin Filter
+
+- Cabin filter name — text
+- Cabin filter code / part number — text
+
+## Air Filter
+
+- Air filter name — text
+- Air filter code / part number — text
+
+## General Service Description
+
+Provide a large multiline textarea:
+
+"What was done to the vehicle?"
+
+Store detailed descriptions of all performed work.
+
+## Form Layout
+
+Organize the form into:
+
+1. Vehicle Information
+2. Mileage Information
+3. Oil Information
+4. Filter Information
+5. General Service Description
+
+All six filter fields must be independently editable.
+
+Filter information must be optional because not every service involves replacing every filter.
+
+## Service History
+
+Every service visit must create a separate service record.
+
+Do not overwrite previous records.
+
+Store:
+
+- Service record UUID
+- Vehicle ID
+- Service date
+- Current mileage
+- Next oil change mileage
+- Oil name
+- Oil replacement type
+- Oil filter name
+- Oil filter code
+- Cabin filter name
+- Cabin filter code
+- Air filter name
+- Air filter code
+- General service description
+- Created at
+- Updated at
+
+Display service history in reverse chronological order.
+
+Allow editing historical records with audit logging.
+
+## Vehicle Search
+
+Support searching by:
+
+- Phone number
+- License plate
+- VIN
+- Brand
+- Model
+
+Normalize telephone numbers into E.164 format.
+
+Validate VIN where provided.
+
+Prevent negative mileage.
+
+Warn when the next oil change mileage is not greater than the current mileage.
+
+## Maintenance Reminders
+
+Support reminders based on:
+
+- Next oil change mileage
+- Recommended service date
+
+Do not invent current mileage when no updated reading exists.
+
+Allow the administrator to trigger maintenance reminder campaigns for eligible customers.
+
+---
+
+# 7. PAGE 3 — REFERRAL BONUSES
+
+Implement a referral tracking system with a fixed **10% discount**.
+
+The discount percentage must not be editable.
+
+## Referral Workflow
+
+1. An existing customer invites a friend.
+2. The administrator records who invited whom.
+3. The invited customer completes their first qualifying paid service.
+4. The referring customer receives one 10% discount entitlement.
+5. The entitlement can be redeemed on one eligible future service.
+6. Once redeemed, the entitlement cannot be reused.
+
+One invited customer can generate a reward only once.
+
+A referring customer can earn separate entitlements from different invited customers.
+
+Do not stack multiple referral discounts on the same service order.
+
+## Referral Fields
+
+- Referral UUID
+- Referring customer
+- Invited customer
+- Referral date
+- Referral status
+- Discount percentage: 10%
+- Qualifying service order
+- Reward issue date
+- Reward redemption date
+- Reward status
+- Redeemed service order
+
+## Referral Statuses
+
+- PENDING
+- CONFIRMED
+- REWARDED
+- CANCELLED
+
+## Reward Statuses
+
+- NOT_ISSUED
+- AVAILABLE
+- REDEEMED
+- VOIDED
+
+## Referral Page
+
+Provide:
+
+- Referring customer search
+- Invited customer search
+- Add referral form
+- Referral history table
+- Referral status management
+- Available discount tracking
+- Redeemed discount tracking
+
+## Referral Analytics
+
+Add charts showing:
+
+- Total referrals
+- Confirmed referrals
+- Issued rewards
+- Redeemed rewards
+
+Provide monthly and yearly filters.
+
+## Validation
+
+Prevent:
+
+- Self-referrals
+- Duplicate referrals
+- Duplicate reward issuance
+- Repeated redemption
+- Reward issuance without a qualifying paid service
+
+Use database constraints and transactions.
+
+---
+
+# 8. PAGE 4 — VEHICLE READY SMS
+
+Create a dedicated page for notifying customers when their vehicles are ready for pickup.
+
+## Features
+
+- Search by phone number
+- Search by license plate
+- Search by VIN
+- Select vehicle
+- Preview SMS
+- Mark vehicle ready
+- Automatically send SMS
+- View SMS delivery history
+- Manually resend with confirmation
+
+## Service Order Statuses
+
+- RECEIVED
+- IN_PROGRESS
+- WAITING_FOR_PARTS
+- READY_FOR_PICKUP
+- DELIVERED
+- CANCELLED
+
+When an order transitions to READY_FOR_PICKUP:
+
+1. Persist the status change.
+2. Create an outbox notification event in the same database transaction.
+3. Queue SMS delivery asynchronously.
+4. Render the localized SMS template.
+5. Send using the configured SMS provider.
+6. Store provider message ID and delivery status.
+7. Retry transient failures safely.
+8. Prevent duplicate automatic notifications.
+
+## Armenian SMS Template
+
+"Հարգելի հաճախորդ, Ձեր {{vehicleBrand}} {{vehicleModel}} ({{licensePlate}}) ավտոմեքենան պատրաստ է։ Կարող եք մոտենալ և վերցնել այն։ Հասցե՝ {{businessAddress}}։ Հեռ․՝ {{businessPhone}}։ A&A Motors"
+
+## English SMS Template
+
+"Your {{vehicleBrand}} {{vehicleModel}} ({{licensePlate}}) is ready for pickup at A&A Motors. Address: {{businessAddress}}. Phone: {{businessPhone}}."
+
+Use the primary business phone by default:
+
++37494889881
+
+Use the configured business address:
+
+52/2 Vazgen Sargsyan Street, Gyumri, Armenia
+
+Allow editing both values in Business Settings.
+
+---
+
+# 9. AWS SMS INTEGRATION
+
+Use **AWS End User Messaging SMS**.
+
+Implement the real AWS adapter using AWS SDK for Java v2.
+
+Use the Pinpoint SMS Voice V2 client and SendTextMessage operation.
+
+## Requirements
+
+- AWS default credentials provider chain
+- IAM-based authentication
+- Configurable AWS region
+- Configurable origination identity
+- E.164 phone validation
+- Support Armenian phone numbers (+374)
+- Transactional/service SMS classification where appropriate
+- Delivery status tracking
+- Configurable AWS event destinations
+- Error handling
+- Retry handling
+- Idempotency at application level
+- Cost-aware logging
+
+Implement:
+
+- SmsProvider interface
+- MockSmsProvider
+- AwsSmsProvider
+
+The origination identity must remain configurable.
+
+Do not assume an unregistered sender ID or long code can send SMS in Armenia.
+
+Document:
+
+- AWS permissions
+- SMS spending limits
+- Armenia-specific sender requirements
+- Sender registration
+- Message costs
+- Delivery event configuration
+
+Do not enable real sending until AWS credentials and required sender configuration have been verified.
+
+---
+
+# 10. VIBER INTEGRATION
+
+Implement two independent Viber integrations.
+
+## Viber Business Messages
+
+This is the preferred Viber channel for phone-number-based advertising.
+
+Create:
+
+- ViberBusinessMessagesProvider interface
+- MockViberBusinessMessagesProvider
+
+Prepare the integration for an approved Viber messaging partner.
+
+Do not invent undocumented partner endpoints.
+
+Keep real Business Messages disabled until partner credentials and API documentation are available.
+
+## Viber Bot API
+
+Implement a real Viber Bot API adapter.
+
+Support:
+
+- Bot authentication
+- X-Viber-Auth-Token
+- Webhook registration
+- Webhook signature verification
+- Incoming messages
+- Subscriber management
+- Text messages
+- Picture messages
+- Delivery callbacks
+- Error handling
+- Unsubscribe handling
+
+Use the official endpoint:
+
+https://chatapi.viber.com/pa/send_message
+
+Only send to eligible subscribed users with valid Viber user IDs.
+
+Never assume that a telephone number can be used as a Viber Bot recipient ID.
+
+The real Viber Bot integration must remain disabled until a commercially activated bot and valid token are available.
+
+Viber Bot must be the fourth fallback channel.
+
+---
+
+# 11. WHATSAPP BUSINESS INTEGRATION
+
+Use the official Meta WhatsApp Business Cloud API.
+
+## Configuration
+
+- Meta access token
+- WhatsApp Business Account ID
+- Phone Number ID
+- Graph API version
+- Webhook verification token
+- App secret
+
+## Features
+
+- Approved marketing templates
+- Template variable substitution
+- Approved media templates
+- Customer consent validation
+- Outbound message sending
+- Webhook processing
+- Delivery status tracking
+- Error handling
+
+## Marketing Message Rules
+
+Business-initiated marketing messages must use approved templates where required.
+
+Do not assume arbitrary free-form messages can be sent outside the applicable customer-service conversation window.
+
+Allow manual advertising text composition, but validate it against the selected provider's permitted message format.
+
+Provide a template selection workflow and preview.
+
+## Documentation
+
+Document how to obtain credentials from:
+
+https://developers.facebook.com/apps/
+
+Use official Meta documentation.
+
+Do not implement unofficial WhatsApp Web automation.
+
+---
+
+# 12. TELEGRAM INTEGRATION
+
+Use the official Telegram Bot API.
+
+Implement:
+
+- Bot token configuration
+- Webhook handling
+- Bot onboarding
+- QR-code onboarding
+- Deep links
+- Customer-to-chat-ID linking
+- Text messages
+- Image messages
+- Inline keyboards
+- Incoming messages
+- Blocked bot handling
+- Delivery errors
+
+A customer must start the bot before receiving messages.
+
+Do not attempt to identify arbitrary Telegram users by phone number.
+
+Implement secure customer verification before linking Telegram chat IDs to customer records.
+
+---
+
+# 13. PAGE 5 — ADVERTISING CAMPAIGNS
+
+Create a complete campaign management page.
+
+## Campaign Fields
+
+- Campaign UUID
+- Name
+- Description
+- Advertising image
+- Message content
+- Target customers
+- Scheduled date
+- Scheduled time
+- Time zone
+- Status
+- Created at
+- Updated at
+
+## Features
+
+- Create campaign
+- Edit campaign
+- Duplicate campaign
+- Delete draft
+- Select recipients
+- Upload image
+- Compose message
+- Preview
+- Schedule
+- Start
+- Pause
+- Cancel
+- View results
+
+## Customer Filters
+
+- Vehicle brand
+- Vehicle model
+- Last service date
+- Oil replacement type
+- Oil name
+- Oil filter name
+- Oil filter code
+- Cabin filter name
+- Cabin filter code
+- Air filter name
+- Air filter code
+- Next oil change mileage
+- Customer consent status
+
+## Campaign Statuses
+
+- DRAFT
+- SCHEDULED
+- RUNNING
+- PAUSED
+- COMPLETED
+- CANCELLED
+- FAILED
+
+## Delivery Strategy
+
+Use the same sequential fallback:
+
+WhatsApp -> Viber Business Messages -> Telegram -> Viber Bot.
+
+## Analytics
+
+Show:
+
+- Selected recipients
+- Eligible recipients
+- Attempted messages
+- Accepted messages
+- Confirmed deliveries
+- Failed messages
+- Pending messages
+- Used channel
+- Estimated costs
+- Actual messaging costs when available
+
+Do not report API acceptance as confirmed delivery.
+
+---
+
+# 14. DATABASE DESIGN
+
+Use PostgreSQL and Flyway.
+
+Create normalized tables:
+
+- users
+- customers
+- vehicles
+- vehicle_service_records
+- service_orders
+- referrals
+- referral_rewards
+- campaigns
+- campaign_recipients
+- message_deliveries
+- message_attempts
+- sms_notifications
+- customer_consents
+- telegram_chat_links
+- viber_subscribers
+- business_settings
+- outbox_events
+- audit_logs
+
+Use UUID primary keys.
+
+Implement:
+
+- Foreign keys
+- Appropriate indexes
+- Unique constraints
+- Transaction boundaries
+- Audit timestamps
+- Optimistic locking where useful
+
+Store all six filter fields in service history records.
+
+Enforce the fixed 10% referral discount in backend business logic.
+
+---
+
+# 15. SECURITY
+
+Implement secure ADMIN authentication.
+
+Requirements:
+
+- Strong password hashing
+- Secure session management
+- Backend authorization
+- Login rate limiting
+- CSRF protection where applicable
+- Input validation
+- Safe file upload
+- Secret management
+- Webhook signature verification
+- Sensitive data masking
+- Audit logging
+
+Do not hardcode passwords or API credentials.
+
+Do not expose provider tokens to the frontend.
+
+Store channel-specific marketing consent.
+
+Support opt-out and suppression lists.
+
+Never send unsolicited marketing messages.
+
+---
+
+# 16. MESSAGING RELIABILITY
+
+Use RabbitMQ for asynchronous delivery.
+
+Implement:
+
+- Durable queues
+- Persistent delivery records
+- Transactional outbox
+- Idempotent processing
+- Bounded retries
+- Exponential backoff
+- Dead-letter queues
+- Provider rate limiting
+- Delivery reconciliation
+- Duplicate prevention
+- Campaign cancellation
+
+Do not claim exactly-once delivery across external providers.
+
+Use explicit delivery state transitions.
+
+Do not initiate fallback while a previous channel's delivery outcome is uncertain.
+
+---
+
+# 17. TESTING
+
+Implement unit tests, integration tests, and critical end-to-end tests.
+
+Test scenarios:
+
+1. ADMIN login
+2. Vehicle creation
+3. Phone and VIN validation
+4. Service record creation
+5. All six filter fields
+6. Service history retrieval
+7. Latest service record selection
+8. Referral creation
+9. Fixed 10% discount enforcement
+10. Duplicate referral prevention
+11. One-time reward redemption
+12. Service order creation
+13. Vehicle ready transition
+14. Automatic SMS notification
+15. Manual SMS resend
+16. AWS SMS adapter with mocked AWS responses
+17. Campaign creation
+18. Marketing consent validation
+19. WhatsApp mock delivery
+20. Viber Business fallback
+21. Telegram eligibility
+22. Viber Bot subscriber eligibility
+23. Duplicate delivery prevention
+24. Scheduled campaign execution
+25. Armenian and English UI rendering
+
+Use Testcontainers for database integration tests.
+
+---
+
+# 18. LOCAL DEVELOPMENT
+
+Provide Docker Compose configuration for:
+
+- Backend
+- Frontend
+- PostgreSQL
+- RabbitMQ
+
+Provide:
+
+- .env.example
+- README.md
+- Flyway migrations
+- Seed data
+- Demo vehicle records
+- Mock messaging providers
+- Mock SMS provider
+- Health checks
+
+The application must work locally without AWS, Meta, Telegram, or Viber credentials.
+
+Real external sending must be disabled by default.
+
+Mock mode must simulate sending and display message status in the UI.
+
+---
+
+# 19. DOCUMENTATION
+
+Create a /docs directory containing:
+
+- architecture.md
+- requirements.md
+- database-schema.md
+- api-reference.md
+- messaging-integrations.md
+- aws-sms-setup.md
+- whatsapp-setup.md
+- viber-setup.md
+- telegram-setup.md
+- security.md
+- deployment.md
+- testing.md
+- known-limitations.md
+
+Document external integration requirements accurately.
+
+Clearly distinguish:
+
+- Implemented and tested
+- Implemented but awaiting credentials
+- Mock only
+- Not yet implemented
+
+---
+
+# 20. IMPLEMENTATION PHASES
+
+## Phase 1 — Foundation
+
+- Repository structure
+- Spring Boot backend
+- React frontend
+- PostgreSQL
+- Flyway
+- Authentication
+- ADMIN role
+- Basic layout
+- Armenian localization
+- English localization
+- Business settings seeded with A&A Motors details
+
+## Phase 2 — Vehicles and Service History
+
+- Customer records
+- Vehicle CRUD
+- Oil information
+- All filter names and codes
+- Mileage tracking
+- Service history
+- Vehicle search
+
+## Phase 3 — Referral Bonuses
+
+- Referral creation
+- Fixed 10% discounts
+- Reward issuance
+- One-time redemption
+- Referral analytics
+
+## Phase 4 — Vehicle Ready SMS
+
+- Service orders
+- Vehicle status workflow
+- SMS templates
+- Mock SMS provider
+- AWS SMS adapter
+- Delivery history
+
+## Phase 5 — Quick Advertising
+
+- Advertising form
+- Image upload
+- Customer selection
+- Optional service history
+- Provider abstraction
+- Mock messaging
+- Sequential fallback
+
+## Phase 6 — Advertising Campaigns
+
+- Campaign creation
+- Recipient filters
+- Scheduling
+- Campaign lifecycle
+- Delivery analytics
+
+## Phase 7 — Official Integrations and Hardening
+
+- WhatsApp Cloud API
+- Telegram Bot API
+- Viber Bot API
+- Viber Business Messages partner abstraction
+- Security testing
+- Automated tests
+- CI/CD
+- Deployment documentation
+
+---
+
+# 21. DEVELOPMENT RULES
+
+Follow these rules:
+
+1. Inspect the repository first.
+2. Treat this specification as the latest authoritative requirements.
+3. Build the application from scratch.
+4. Create architecture documentation before implementation.
+5. Implement real backend functionality.
+6. Connect all frontend forms to backend APIs.
+7. Persist data in PostgreSQL.
+8. Use mock providers until real credentials are available.
+9. Never invent undocumented external API endpoints.
+10. Never hardcode secrets.
+11. Implement proper error handling.
+12. Add tests for critical business rules.
+13. Run builds and tests after each phase.
+14. Fix errors before continuing.
+15. Update documentation after implementation changes.
+16. Do not silently skip requirements.
+17. Do not claim an integration is production-ready without verification.
+18. Avoid unnecessary architectural complexity.
+19. Continue development incrementally.
+20. Do not ask for non-blocking clarifications.
+
+---
+
+# 22. ACCEPTANCE CRITERIA
+
+The application is functionally complete when:
+
+- ADMIN can log in securely.
+- Armenian is the default interface language.
+- English language switching works.
+- Business details are saved and editable.
+- Vehicles can be created and searched.
+- Service history is preserved.
+- All oil and filter fields work.
+- Referral bonuses are fixed at 10%.
+- Referral discounts cannot be reused.
+- Vehicle-ready SMS works through the mock provider.
+- AWS SMS adapter is implemented and tested with mocked AWS responses.
+- Quick advertising supports images and manual text.
+- Optional latest service history works.
+- Mock messaging follows the specified fallback order.
+- Campaigns can be created and scheduled.
+- Delivery results are recorded.
+- Backend tests pass.
+- Frontend builds successfully.
+- Docker Compose starts the local application.
+- Documentation explains production integration requirements.
+
+Real messaging delivery depends on official provider credentials, approvals, and verified configuration.
+
+---
+
+# 23. START IMPLEMENTATION NOW
+
+Begin with Phase 1.
+
+First inspect the repository and available tools.
+
+Then:
+
+1. Create the project structure.
+2. Configure Spring Boot and React.
+3. Configure PostgreSQL and Flyway.
+4. Implement ADMIN authentication.
+5. Build the application layout.
+6. Configure Armenian and English localization.
+7. Seed A&A Motors business information.
+8. Add Docker Compose.
+9. Run the application.
+10. Execute tests and fix failures.
+
+After Phase 1, report:
+
+- Implemented features
+- Files created
+- Commands executed
+- Build and test results
+- Known limitations
+- Next phase
+
+Then continue implementation phase by phase, within the available execution context.
+
+**Build a real working A&A Motors CRM, not a demonstration or frontend-only prototype.**

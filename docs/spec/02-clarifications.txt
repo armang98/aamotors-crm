@@ -1,0 +1,184 @@
+# A&A Motors CRM — Updated Integration and Access Requirements
+
+Apply the following decisions to the existing A&A Motors CRM project.
+
+Do not remove or change the five previously defined main pages or their business functionality.
+
+## 1. Application Identity
+
+- Business name: A&A Motors
+- Application name: A&A Motors CRM
+- Browser title: A&A Motors CRM
+- Single-tenant application
+- One business owner
+- No employee management required
+
+## 2. Authentication
+
+Implement authentication for one administrator.
+
+Role:
+- ADMIN
+
+Remove unnecessary role management and employee permissions.
+
+The administrator must have full access to all five pages and business settings.
+
+Use secure password hashing, session management, login protection, and appropriate backend authorization.
+
+Do not hardcode administrator credentials.
+
+## 3. Languages
+
+Default language: Armenian (hy-AM).
+
+Secondary language: English (en).
+
+Remove Russian localization requirements.
+
+All navigation, forms, validation messages, notifications, and business labels must support Armenian and English.
+
+Provide a language switcher in the application header.
+
+Store language preferences.
+
+Use proper Armenian Unicode fonts and text rendering.
+
+## 4. AWS SMS Provider
+
+Use AWS End User Messaging SMS.
+
+Implement a real integration using AWS SDK for Java v2 and the Pinpoint SMS Voice V2 client.
+
+Use the SendTextMessage operation.
+
+Requirements:
+
+- AWS IAM-based authentication
+- AWS region configuration
+- AWS SDK default credentials provider chain
+- E.164 phone number validation
+- Armenia (+374) support
+- Configurable origination identity
+- SMS message type appropriate to the notification
+- Delivery tracking through configured AWS event destinations
+- Error handling
+- Retry logic
+- Message logging without exposing sensitive data
+- Idempotency
+
+The primary SMS use case is notifying customers that their vehicles are ready for pickup.
+
+Before enabling production delivery, document and verify AWS account SMS permissions, spending limits, origination identity requirements, Armenia-specific restrictions, and delivery costs.
+
+Keep MockSmsProvider for local testing.
+
+## 5. Viber Integration
+
+Implement two separate Viber adapters.
+
+### Viber Bot API
+
+Implement a real integration using the official Viber REST Bot API.
+
+Support:
+
+- Authentication using X-Viber-Auth-Token
+- Webhook registration
+- Webhook signature verification
+- Receiving customer messages
+- Storing subscribed Viber user IDs
+- Sending text messages
+- Sending images
+- Delivery callbacks
+- Error handling
+- Unsubscribe events
+
+Use the official endpoint:
+
+https://chatapi.viber.com/pa/send_message
+
+Send only to users who have subscribed to the bot and are eligible to receive the message.
+
+Do not assume a phone number can be used as a Viber Bot recipient ID.
+
+Require an officially activated Viber bot and valid credentials before enabling real sending.
+
+### Viber Business Messages
+
+Create a separate ViberBusinessMessagesProvider abstraction.
+
+This provider will support phone-number-based business messaging through an approved Viber partner.
+
+Do not invent partner-specific endpoints.
+
+Keep this integration disabled until an official partner and API documentation are provided.
+
+Do not treat Viber Bot API as a replacement for Viber Business Messages.
+
+## 6. WhatsApp Integration
+
+Implement the official Meta WhatsApp Business Cloud API.
+
+Configuration:
+
+- Meta access token
+- WhatsApp Business Account ID
+- Phone Number ID
+- Graph API version
+- Webhook verification token
+- App secret
+
+Features:
+
+- Send approved marketing templates
+- Support template variables
+- Support approved media templates
+- Track message status
+- Process webhooks
+- Validate customer consent
+- Handle provider errors
+
+Provide configuration instructions for obtaining credentials from Meta for Developers.
+
+Do not implement unofficial WhatsApp Web automation.
+
+## 7. Telegram
+
+Keep the official Telegram Bot API integration.
+
+Support customer onboarding through bot deep links and QR codes.
+
+Store verified customer-to-chat-ID mappings.
+
+## 8. Delivery Priority
+
+For eligible advertising messages, preserve:
+
+1. WhatsApp Business
+2. Viber Business Messages
+3. Telegram Bot
+
+Viber Bot messaging may be offered as a separate eligible subscriber channel, but must not be represented as phone-number-based Viber Business Messages.
+
+If a provider is not configured or the recipient is ineligible, skip it.
+
+If delivery status is ambiguous, do not automatically send a duplicate through another channel.
+
+## 9. Implementation Requirements
+
+- Update existing architecture and configuration.
+- Implement the AWS SMS adapter.
+- Implement the real Viber Bot API adapter.
+- Prepare the Viber Business Messages abstraction.
+- Implement the WhatsApp Cloud API adapter.
+- Preserve mock providers for testing.
+- Update authentication to ADMIN only.
+- Set Armenian as the default language.
+- Keep English as the secondary language.
+- Update tests and documentation.
+- Never commit API tokens or AWS credentials.
+
+Implement these changes incrementally and verify them with automated tests.
+
+Start by inspecting the current repository and identifying which components already exist.

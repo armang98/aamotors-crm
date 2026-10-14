@@ -1,0 +1,25 @@
+app:
+  admin:
+    username: admin
+    initial-password: test-password-123
+  security:
+    login:
+      max-failures: 3
+      lock-duration: 15m
+  media:
+    root: ${java.io.tmpdir}/aamotors-test-media
+  campaigns:
+    tick: 2s
+    batch-size: 10
+  messaging:
+    outbox:
+      poll-interval: 500ms
+    sms:
+      max-attempts: 3
+      base-backoff: 1s
+      max-backoff: 5s
+      mock-delivery-delay: 1s
+logging:
+  level:
+    org.testcontainers: WARN
+    com.github.dockerjava: WARN
